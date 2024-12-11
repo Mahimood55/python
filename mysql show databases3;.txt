@@ -1,0 +1,676 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mydb               |
+| mysql              |
+| nit                |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use nit;
+Database changed
+mysql> create table customer(name varchar(50),id int notnull primary key,address varchar(60),salary int(40));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'notnull primary key,address varchar(60),salary int(40))' at line 1
+mysql> create table customer(name varchar(50),id int not null primary key,address varchar(60),salary int(40));
+Query OK, 0 rows affected, 1 warning (0.07 sec)
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(50) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(60) | YES  |     | NULL    |       |
+| salary  | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert table customer values('mahimood',10,'mkp',100000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table customer values('mahimood',10,'mkp',100000)' at line 1
+mysql> insert into table customer values('mahimood',10,'mkp',100000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table customer values('mahimood',10,'mkp',100000)' at line 1
+mysql> insert into customer values('mahimood',10,'mkp',100000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into customer values('nasreen',11,'mkp',90000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into customer values('saleema',12,'tprm',80000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into customer values('hussain',13,'tprm',85000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from customer;
++----------+----+---------+--------+
+| name     | id | address | salary |
++----------+----+---------+--------+
+| mahimood | 10 | mkp     | 100000 |
+| nasreen  | 11 | mkp     |  90000 |
+| saleema  | 12 | tprm    |  80000 |
+| hussain  | 13 | tprm    |  85000 |
++----------+----+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select name from customer;
++----------+
+| name     |
++----------+
+| mahimood |
+| nasreen  |
+| saleema  |
+| hussain  |
++----------+
+4 rows in set (0.00 sec)
+
+mysql> select id from customer;
++----+
+| id |
++----+
+| 10 |
+| 11 |
+| 12 |
+| 13 |
++----+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer where id = 12;
++---------+----+---------+--------+
+| name    | id | address | salary |
++---------+----+---------+--------+
+| saleema | 12 | tprm    |  80000 |
++---------+----+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where address = tprm;
+ERROR 1054 (42S22): Unknown column 'tprm' in 'where clause'
+mysql> select * from customer where address = 'tprm';
++---------+----+---------+--------+
+| name    | id | address | salary |
++---------+----+---------+--------+
+| saleema | 12 | tprm    |  80000 |
+| hussain | 13 | tprm    |  85000 |
++---------+----+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customer where salary > 70000;
++----------+----+---------+--------+
+| name     | id | address | salary |
++----------+----+---------+--------+
+| mahimood | 10 | mkp     | 100000 |
+| nasreen  | 11 | mkp     |  90000 |
+| saleema  | 12 | tprm    |  80000 |
+| hussain  | 13 | tprm    |  85000 |
++----------+----+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer where salary < 80000;
+Empty set (0.00 sec)
+
+mysql> select * from customer where salary < 1200000;
++----------+----+---------+--------+
+| name     | id | address | salary |
++----------+----+---------+--------+
+| mahimood | 10 | mkp     | 100000 |
+| nasreen  | 11 | mkp     |  90000 |
+| saleema  | 12 | tprm    |  80000 |
+| hussain  | 13 | tprm    |  85000 |
++----------+----+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> update customer set address='hyd' where id = 10;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer;
++----------+----+---------+--------+
+| name     | id | address | salary |
++----------+----+---------+--------+
+| mahimood | 10 | hyd     | 100000 |
+| nasreen  | 11 | mkp     |  90000 |
+| saleema  | 12 | tprm    |  80000 |
+| hussain  | 13 | tprm    |  85000 |
++----------+----+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> update customer set address='mkp' where id = 10;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer;
++----------+----+---------+--------+
+| name     | id | address | salary |
++----------+----+---------+--------+
+| mahimood | 10 | mkp     | 100000 |
+| nasreen  | 11 | mkp     |  90000 |
+| saleema  | 12 | tprm    |  80000 |
+| hussain  | 13 | tprm    |  85000 |
++----------+----+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer add phoneno int(11);
+Query OK, 0 rows affected, 1 warning (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> select * from customer;
++----------+----+---------+--------+---------+
+| name     | id | address | salary | phoneno |
++----------+----+---------+--------+---------+
+| mahimood | 10 | mkp     | 100000 |    NULL |
+| nasreen  | 11 | mkp     |  90000 |    NULL |
+| saleema  | 12 | tprm    |  80000 |    NULL |
+| hussain  | 13 | tprm    |  85000 |    NULL |
++----------+----+---------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> update customer set phoneno=123 where id=10;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set phoneno=234 where id=11;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set phoneno=345 where id=12;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set phoneno=456 where id=13;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer;
++----------+----+---------+--------+---------+
+| name     | id | address | salary | phoneno |
++----------+----+---------+--------+---------+
+| mahimood | 10 | mkp     | 100000 |     123 |
+| nasreen  | 11 | mkp     |  90000 |     234 |
+| saleema  | 12 | tprm    |  80000 |     345 |
+| hussain  | 13 | tprm    |  85000 |     456 |
++----------+----+---------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer where id=10;
++----------+----+---------+--------+---------+
+| name     | id | address | salary | phoneno |
++----------+----+---------+--------+---------+
+| mahimood | 10 | mkp     | 100000 |     123 |
++----------+----+---------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> select sum(salary) from customer;
++-------------+
+| sum(salary) |
++-------------+
+|      355000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(salary) from customer;
++-------------+
+| avg(salary) |
++-------------+
+|  88750.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary) from customer;
++-------------+
+| max(salary) |
++-------------+
+|      100000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select min(salary) from customer;
++-------------+
+| min(salary) |
++-------------+
+|       80000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(salary) from customer;
++---------------+
+| count(salary) |
++---------------+
+|             4 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select count(name) from customer;
++-------------+
+| count(name) |
++-------------+
+|           4 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer order by name;
++----------+----+---------+--------+---------+
+| name     | id | address | salary | phoneno |
++----------+----+---------+--------+---------+
+| hussain  | 13 | tprm    |  85000 |     456 |
+| mahimood | 10 | mkp     | 100000 |     123 |
+| nasreen  | 11 | mkp     |  90000 |     234 |
+| saleema  | 12 | tprm    |  80000 |     345 |
++----------+----+---------+--------+---------+
+4 rows in set (0.03 sec)
+
+mysql> select * from customer where name like '%a';
++---------+----+---------+--------+---------+
+| name    | id | address | salary | phoneno |
++---------+----+---------+--------+---------+
+| saleema | 12 | tprm    |  80000 |     345 |
++---------+----+---------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where name like 'a%';
+Empty set (0.00 sec)
+
+mysql> select * from customer where name like 'm%';
++----------+----+---------+--------+---------+
+| name     | id | address | salary | phoneno |
++----------+----+---------+--------+---------+
+| mahimood | 10 | mkp     | 100000 |     123 |
++----------+----+---------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where name like '_a%';
++----------+----+---------+--------+---------+
+| name     | id | address | salary | phoneno |
++----------+----+---------+--------+---------+
+| mahimood | 10 | mkp     | 100000 |     123 |
+| nasreen  | 11 | mkp     |  90000 |     234 |
+| saleema  | 12 | tprm    |  80000 |     345 |
++----------+----+---------+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customer where name like 'h%';
++---------+----+---------+--------+---------+
+| name    | id | address | salary | phoneno |
++---------+----+---------+--------+---------+
+| hussain | 13 | tprm    |  85000 |     456 |
++---------+----+---------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where name like '_u%';
++---------+----+---------+--------+---------+
+| name    | id | address | salary | phoneno |
++---------+----+---------+--------+---------+
+| hussain | 13 | tprm    |  85000 |     456 |
++---------+----+---------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where name like '%n';
++---------+----+---------+--------+---------+
+| name    | id | address | salary | phoneno |
++---------+----+---------+--------+---------+
+| nasreen | 11 | mkp     |  90000 |     234 |
+| hussain | 13 | tprm    |  85000 |     456 |
++---------+----+---------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customer where name like '%o_';
++----------+----+---------+--------+---------+
+| name     | id | address | salary | phoneno |
++----------+----+---------+--------+---------+
+| mahimood | 10 | mkp     | 100000 |     123 |
++----------+----+---------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where name like '%o';
+Empty set (0.00 sec)
+
+mysql> create table emp;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table emp('name' varchar(50),id int not null primary key,address varchar(60),salary int(50));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''name' varchar(50),id int not null primary key,address varchar(60),salary int(50' at line 1
+mysql> create table emp('name' varchar(50),'id' int not null primary key,'address' varchar(60),'salary' int(50));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''name' varchar(50),'id' int not null primary key,'address' varchar(60),'salary' ' at line 1
+mysql> create table emp(name varchar(50),id int not null primary key,address varchar(60),salary int(50));
+ERROR 1050 (42S01): Table 'emp' already exists
+mysql> select * from emp;
++----+--------+---------+----------+
+| id | salary | empcode | name     |
++----+--------+---------+----------+
+| 12 |  20000 |     102 | mahimood |
+| 13 |  60000 |     104 | durga    |
+| 14 |  40000 |     105 | nasreen  |
+| 15 |  67000 |     107 | ramzan   |
++----+--------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer;
++----------+----+---------+--------+---------+
+| name     | id | address | salary | phoneno |
++----------+----+---------+--------+---------+
+| mahimood | 10 | mkp     | 100000 |     123 |
+| nasreen  | 11 | mkp     |  90000 |     234 |
+| saleema  | 12 | tprm    |  80000 |     345 |
+| hussain  | 13 | tprm    |  85000 |     456 |
++----------+----+---------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer inner join emp on customer.id=emp.id;
++---------+----+---------+--------+---------+----+--------+---------+----------+
+| name    | id | address | salary | phoneno | id | salary | empcode | name     |
++---------+----+---------+--------+---------+----+--------+---------+----------+
+| saleema | 12 | tprm    |  80000 |     345 | 12 |  20000 |     102 | mahimood |
+| hussain | 13 | tprm    |  85000 |     456 | 13 |  60000 |     104 | durga    |
++---------+----+---------+--------+---------+----+--------+---------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customer inner join emp on customer.name=emp.name,;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from customer inner join emp on customer.name=emp.name;
++----------+----+---------+--------+---------+----+--------+---------+----------+
+| name     | id | address | salary | phoneno | id | salary | empcode | name     |
++----------+----+---------+--------+---------+----+--------+---------+----------+
+| mahimood | 10 | mkp     | 100000 |     123 | 12 |  20000 |     102 | mahimood |
+| nasreen  | 11 | mkp     |  90000 |     234 | 14 |  40000 |     105 | nasreen  |
++----------+----+---------+--------+---------+----+--------+---------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customer left join emp on customer.id=emp.id;
++----------+----+---------+--------+---------+------+--------+---------+----------+
+| name     | id | address | salary | phoneno | id   | salary | empcode | name     |
++----------+----+---------+--------+---------+------+--------+---------+----------+
+| mahimood | 10 | mkp     | 100000 |     123 | NULL |   NULL |    NULL | NULL     |
+| nasreen  | 11 | mkp     |  90000 |     234 | NULL |   NULL |    NULL | NULL     |
+| saleema  | 12 | tprm    |  80000 |     345 |   12 |  20000 |     102 | mahimood |
+| hussain  | 13 | tprm    |  85000 |     456 |   13 |  60000 |     104 | durga    |
++----------+----+---------+--------+---------+------+--------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer right join emp on customer.id=emp.id;
++---------+------+---------+--------+---------+----+--------+---------+----------+
+| name    | id   | address | salary | phoneno | id | salary | empcode | name     |
++---------+------+---------+--------+---------+----+--------+---------+----------+
+| saleema |   12 | tprm    |  80000 |     345 | 12 |  20000 |     102 | mahimood |
+| hussain |   13 | tprm    |  85000 |     456 | 13 |  60000 |     104 | durga    |
+| NULL    | NULL | NULL    |   NULL |    NULL | 14 |  40000 |     105 | nasreen  |
+| NULL    | NULL | NULL    |   NULL |    NULL | 15 |  67000 |     107 | ramzan   |
++---------+------+---------+--------+---------+----+--------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer cross join emp;
++----------+----+---------+--------+---------+----+--------+---------+----------+
+| name     | id | address | salary | phoneno | id | salary | empcode | name     |
++----------+----+---------+--------+---------+----+--------+---------+----------+
+| hussain  | 13 | tprm    |  85000 |     456 | 12 |  20000 |     102 | mahimood |
+| saleema  | 12 | tprm    |  80000 |     345 | 12 |  20000 |     102 | mahimood |
+| nasreen  | 11 | mkp     |  90000 |     234 | 12 |  20000 |     102 | mahimood |
+| mahimood | 10 | mkp     | 100000 |     123 | 12 |  20000 |     102 | mahimood |
+| hussain  | 13 | tprm    |  85000 |     456 | 13 |  60000 |     104 | durga    |
+| saleema  | 12 | tprm    |  80000 |     345 | 13 |  60000 |     104 | durga    |
+| nasreen  | 11 | mkp     |  90000 |     234 | 13 |  60000 |     104 | durga    |
+| mahimood | 10 | mkp     | 100000 |     123 | 13 |  60000 |     104 | durga    |
+| hussain  | 13 | tprm    |  85000 |     456 | 14 |  40000 |     105 | nasreen  |
+| saleema  | 12 | tprm    |  80000 |     345 | 14 |  40000 |     105 | nasreen  |
+| nasreen  | 11 | mkp     |  90000 |     234 | 14 |  40000 |     105 | nasreen  |
+| mahimood | 10 | mkp     | 100000 |     123 | 14 |  40000 |     105 | nasreen  |
+| hussain  | 13 | tprm    |  85000 |     456 | 15 |  67000 |     107 | ramzan   |
+| saleema  | 12 | tprm    |  80000 |     345 | 15 |  67000 |     107 | ramzan   |
+| nasreen  | 11 | mkp     |  90000 |     234 | 15 |  67000 |     107 | ramzan   |
+| mahimood | 10 | mkp     | 100000 |     123 | 15 |  67000 |     107 | ramzan   |
++----------+----+---------+--------+---------+----+--------+---------+----------+
+16 rows in set (0.00 sec)
+
+mysql> create table emp1;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table emp1(name varchar(50),id int(80),salary int(60));
+Query OK, 0 rows affected, 2 warnings (0.07 sec)
+
+mysql> desc emp1;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(50) | YES  |     | NULL    |       |
+| id     | int         | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into emp1 values('afrin',11,20000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into emp1 values('nafrin',12,30000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp1 values('nafrin',13,40000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into emp1 values('nafrin',14,50000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from emp1;
++--------+------+--------+
+| name   | id   | salary |
++--------+------+--------+
+| afrin  |   11 |  20000 |
+| nafrin |   12 |  30000 |
+| nafrin |   13 |  40000 |
+| nafrin |   14 |  50000 |
++--------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp1;
++--------+------+--------+
+| name   | id   | salary |
++--------+------+--------+
+| afrin  |   11 |  20000 |
+| nafrin |   12 |  30000 |
+| nafrin |   13 |  40000 |
+| nafrin |   14 |  50000 |
++--------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> delete from emp1 where id = 11;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from emp1;
++--------+------+--------+
+| name   | id   | salary |
++--------+------+--------+
+| nafrin |   12 |  30000 |
+| nafrin |   13 |  40000 |
+| nafrin |   14 |  50000 |
++--------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp1;
++--------+------+--------+
+| name   | id   | salary |
++--------+------+--------+
+| nafrin |   12 |  30000 |
+| nafrin |   13 |  40000 |
+| nafrin |   14 |  50000 |
++--------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp1;
++--------+------+--------+
+| name   | id   | salary |
++--------+------+--------+
+| nafrin |   12 |  30000 |
+| nafrin |   13 |  40000 |
+| nafrin |   14 |  50000 |
++--------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp1;
++--------+------+--------+
+| name   | id   | salary |
++--------+------+--------+
+| nafrin |   12 |  30000 |
+| nafrin |   13 |  40000 |
+| nafrin |   14 |  50000 |
++--------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customer;
++----------+----+---------+--------+---------+
+| name     | id | address | salary | phoneno |
++----------+----+---------+--------+---------+
+| mahimood | 10 | mkp     | 100000 |     123 |
+| nasreen  | 11 | mkp     |  90000 |     234 |
+| saleema  | 12 | tprm    |  80000 |     345 |
+| hussain  | 13 | tprm    |  85000 |     456 |
++----------+----+---------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer drop primary key;
+Query OK, 4 rows affected (0.09 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(50) | YES  |     | NULL    |       |
+| id      | int         | NO   |     | NULL    |       |
+| address | varchar(60) | YES  |     | NULL    |       |
+| salary  | int         | YES  |     | NULL    |       |
+| phoneno | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table customer add primary key(id);
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(50) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(60) | YES  |     | NULL    |       |
+| salary  | int         | YES  |     | NULL    |       |
+| phoneno | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student1;
++------+------+---------+-------+
+| name | id   | address | marks |
++------+------+---------+-------+
+| bin  |   12 | hyd     |    40 |
+| bin  |   13 | mmm     |    50 |
+| bin  |   13 | nmn     |    60 |
++------+------+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> rename table student1 to std;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from std;
++------+------+---------+-------+
+| name | id   | address | marks |
++------+------+---------+-------+
+| bin  |   12 | hyd     |    40 |
+| bin  |   13 | mmm     |    50 |
+| bin  |   13 | nmn     |    60 |
++------+------+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> rename std from name='kim' where id = 12;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'std from name='kim' where id = 12' at line 1
+mysql> truncate table std;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from std;
+Empty set (0.00 sec)
+
+mysql> desc std;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(30) | YES  |     | NULL    |       |
+| id      | int         | YES  |     | NULL    |       |
+| address | varchar(40) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> drop table std;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc std;
+ERROR 1146 (42S02): Table 'nit.std' doesn't exist
+mysql> select * from customer;
++----------+----+---------+--------+---------+
+| name     | id | address | salary | phoneno |
++----------+----+---------+--------+---------+
+| mahimood | 10 | mkp     | 100000 |     123 |
+| nasreen  | 11 | mkp     |  90000 |     234 |
+| saleema  | 12 | tprm    |  80000 |     345 |
+| hussain  | 13 | tprm    |  85000 |     456 |
++----------+----+---------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp;
++----+--------+---------+----------+
+| id | salary | empcode | name     |
++----+--------+---------+----------+
+| 12 |  20000 |     102 | mahimood |
+| 13 |  60000 |     104 | durga    |
+| 14 |  40000 |     105 | nasreen  |
+| 15 |  67000 |     107 | ramzan   |
++----+--------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer full join emp on customer.id=emp.id;
+ERROR 1054 (42S22): Unknown column 'customer.id' in 'on clause'
+mysql> select * from customer left join emp on customer.id=emp.id;
++----------+----+---------+--------+---------+------+--------+---------+----------+
+| name     | id | address | salary | phoneno | id   | salary | empcode | name     |
++----------+----+---------+--------+---------+------+--------+---------+----------+
+| mahimood | 10 | mkp     | 100000 |     123 | NULL |   NULL |    NULL | NULL     |
+| nasreen  | 11 | mkp     |  90000 |     234 | NULL |   NULL |    NULL | NULL     |
+| saleema  | 12 | tprm    |  80000 |     345 |   12 |  20000 |     102 | mahimood |
+| hussain  | 13 | tprm    |  85000 |     456 |   13 |  60000 |     104 | durga    |
++----------+----+---------+--------+---------+------+--------+---------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer full join emp on customer.id=emp.id;
+ERROR 1054 (42S22): Unknown column 'customer.id' in 'on clause'
+mysql> select * from customer cross join emp on customer.id=emp.id;
++---------+----+---------+--------+---------+----+--------+---------+----------+
+| name    | id | address | salary | phoneno | id | salary | empcode | name     |
++---------+----+---------+--------+---------+----+--------+---------+----------+
+| saleema | 12 | tprm    |  80000 |     345 | 12 |  20000 |     102 | mahimood |
+| hussain | 13 | tprm    |  85000 |     456 | 13 |  60000 |     104 | durga    |
++---------+----+---------+--------+---------+----+--------+---------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customer right join emp on customer.id=emp.id;
++---------+------+---------+--------+---------+----+--------+---------+----------+
+| name    | id   | address | salary | phoneno | id | salary | empcode | name     |
++---------+------+---------+--------+---------+----+--------+---------+----------+
+| saleema |   12 | tprm    |  80000 |     345 | 12 |  20000 |     102 | mahimood |
+| hussain |   13 | tprm    |  85000 |     456 | 13 |  60000 |     104 | durga    |
+| NULL    | NULL | NULL    |   NULL |    NULL | 14 |  40000 |     105 | nasreen  |
+| NULL    | NULL | NULL    |   NULL |    NULL | 15 |  67000 |     107 | ramzan   |
++---------+------+---------+--------+---------+----+--------+---------+----------+
+4 rows in set (0.00 sec)
