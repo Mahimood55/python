@@ -15,7 +15,7 @@ genai.configure(api_key=os.environ['GEMINI_API_KEY'])
 # function 
 
 def get_gemini_response(input, image):
-    model = genai.GenerativeModel('gemini-pro-vision')
+    model = genai.GenerativeModel('gemini-1.5-flash')
 
     if input != "":
         response = model.generate_content([input, image])
